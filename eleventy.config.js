@@ -1,13 +1,11 @@
 export default function (eleventyConfig) {
 
-  // Static files copied directly to the finished site.
   eleventyConfig.addPassthroughCopy({
     "src/assets": "assets",
     "public": "/",
     "admin": "admin"
   });
 
-  // Content collections.
   eleventyConfig.addCollection("posts", (collectionApi) => {
     return collectionApi
       .getFilteredByGlob("content/posts/**/*.md")
@@ -18,6 +16,42 @@ export default function (eleventyConfig) {
     return collectionApi
       .getFilteredByGlob("content/notes/**/*.md")
       .sort((a, b) => b.date - a.date);
+  });
+
+  eleventyConfig.addFilter("readableDate", (dateObj) => {
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "America/Chicago"
+    }).format(new Date(dateObj));
+  });
+
+  eleventyConfig.addFilter("readableDateTime", (dateObj) => {
+    return new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "America/Chicago"
+    }).format(new Date(dateObj));
+  });
+
+  eleventyConfig.addFilter("htmlDateString", (dateObj) => {
+    const date = new Date(dateObj);
+
+    const parts = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      timeZone: "America/Chicago"
+    }).formatToParts(date);
+
+    const get = (type) =>
+      parts.find((part) => part.type === type)?.value;
+
+    return `${get("year")}-${get("month")}-${get("day")}`;
   });
 
   return {
