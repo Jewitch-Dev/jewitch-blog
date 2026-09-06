@@ -4,22 +4,43 @@ title: Notes
 permalink: /notes/
 ---
 
-<h1>Notes</h1>
+<header class="page-header">
+  <p class="eyebrow">Short-form dispatches</p>
+  <h1>Notes</h1>
+
+  <p>
+    Smaller thoughts, observations, links, and things that don't
+    need an entire article wrapped around them.
+  </p>
+</header>
 
 {% if collections.notes.length %}
-  {% for note in collections.notes %}
-    <article>
-      {{ note.content | safe }}
 
-      <p>
-        <a href="{{ note.url }}">
-          <time datetime="{{ note.date.toISOString() }}">
-            {{ note.date.toISOString() }}
+  <div class="note-list">
+
+    {% for note in collections.notes %}
+      <article class="note-summary h-entry">
+
+        <div class="note-summary__content e-content">
+          {{ note.content | safe }}
+        </div>
+
+        <a class="note-summary__date u-url" href="{{ note.url }}">
+          <time
+            class="dt-published"
+            datetime="{{ note.date | htmlDateString }}"
+          >
+            {{ note.date | readableDateTime }}
           </time>
         </a>
-      </p>
-    </article>
-  {% endfor %}
+
+      </article>
+    {% endfor %}
+
+  </div>
+
 {% else %}
-  <p>No notes yet.</p>
+
+  <p class="empty-state">No notes yet.</p>
+
 {% endif %}
