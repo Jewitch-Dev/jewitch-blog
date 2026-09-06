@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+title: Notes
+permalink: /notes/
+---
+
+<h1>Notes</h1>
+
+{% if collections.notes.length %}
+  {% for note in collections.notes %}
+    <article>
+      {{ note.content | safe }}
+
+      <p>
+        <a href="{{ note.url }}">
+          <time datetime="{{ note.date.toISOString() }}">
+            {{ note.date.toISOString() }}
+          </time>
+        </a>
+      </p>
+    </article>
+  {% endfor %}
+{% else %}
+  <p>No notes yet.</p>
+{% endif %}
