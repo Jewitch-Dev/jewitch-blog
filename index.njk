@@ -1,47 +1,99 @@
 ---
 layout: layouts/base.njk
 title: Home
+description: An independent home on the open web.
 permalink: /
 ---
 
-<h1>jewitch.blog</h1>
+<section class="hero">
+  <p class="eyebrow">An independent home on the open web</p>
 
-<p>
-  An independent home on the open web.
-</p>
+  <h1>
+    Words, notes,<br>
+    and assorted <em>witchery.</em>
+  </h1>
 
-<section>
-  <h2>Writing</h2>
-
-  {% if collections.posts.length %}
-    <ul>
-    {% for post in collections.posts %}
-      <li>
-        <a href="{{ post.url }}">
-          {{ post.data.title }}
-        </a>
-      </li>
-    {% endfor %}
-    </ul>
-  {% else %}
-    <p>No articles yet.</p>
-  {% endif %}
+  <p class="hero__intro">
+    This is my little corner of the web, built by hand instead of
+    rented from an algorithm.
+  </p>
 </section>
 
-<section>
-  <h2>Notes</h2>
+<section class="home-section">
+
+  <div class="section-heading">
+    <h2>Latest writing</h2>
+    <a href="/posts/">All writing →</a>
+  </div>
+
+  {% if collections.posts.length %}
+
+    <div class="post-list">
+      {% for post in collections.posts %}
+        {% if loop.index <= 3 %}
+        <article class="post-summary">
+          <time datetime="{{ post.date | htmlDateString }}">
+            {{ post.date | readableDate }}
+          </time>
+
+          <h3>
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+          </h3>
+
+          {% if post.data.description %}
+            <p>{{ post.data.description }}</p>
+          {% endif %}
+        </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  {% else %}
+
+    <p class="empty-state">
+      No long-form writing yet. The blank page is staring back.
+    </p>
+
+  {% endif %}
+
+</section>
+
+<section class="home-section">
+
+  <div class="section-heading">
+    <h2>Recent notes</h2>
+    <a href="/notes/">All notes →</a>
+  </div>
 
   {% if collections.notes.length %}
-    <ul>
-    {% for note in collections.notes %}
-      <li>
-        <a href="{{ note.url }}">
-          {{ note.date.toISOString() }}
-        </a>
-      </li>
-    {% endfor %}
-    </ul>
+
+    <div class="note-list">
+      {% for note in collections.notes %}
+        {% if loop.index <= 5 %}
+        <article class="note-summary h-entry">
+
+          <div class="note-summary__content e-content">
+            {{ note.content | safe }}
+          </div>
+
+          <a class="note-summary__date u-url" href="{{ note.url }}">
+            <time
+              class="dt-published"
+              datetime="{{ note.date | htmlDateString }}"
+            >
+              {{ note.date | readableDateTime }}
+            </time>
+          </a>
+
+        </article>
+        {% endif %}
+      {% endfor %}
+    </div>
+
   {% else %}
-    <p>No notes yet.</p>
+
+    <p class="empty-state">No notes yet.</p>
+
   {% endif %}
+
 </section>
