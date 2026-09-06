@@ -58,5 +58,8 @@ npm ci --no-audit --no-fund
 echo "[jewitch.blog] Building Eleventy..."
 npm run build
 
+echo "[jewitch.blog] Restoring SELinux web-content labels..."
+sudo /usr/sbin/restorecon -RF "$PROJECT/_site"
+
 echo "[jewitch.blog] Deployment completed successfully."
 echo "[jewitch.blog] Live commit: $(git rev-parse HEAD)"
