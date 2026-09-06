@@ -1,0 +1,168 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: Jewitch-Dev/jewitch-blog
+  branch: main
+
+media_folder: /public/media
+public_folder: /media
+
+slug:
+  encoding: unicode
+  clean_accents: false
+  sanitize_replacement: "-"
+  trim: true
+  lowercase: true
+  timezone: local
+
+collections:
+
+  # ----------------------------------------------------------
+  # ARTICLES
+  # Long-form writing.
+  # ----------------------------------------------------------
+  - name: posts
+    label: Articles
+    label_singular: Article
+    folder: /content/posts
+    create: true
+    extension: md
+    format: yaml-frontmatter
+    slug: "{{date | date('YYYY-MM-DD')}}-{{slug}}"
+    preview_path: "/posts/{{slug}}/"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+
+      - label: Publication Date
+        name: date
+        widget: datetime
+        default: "{{now}}"
+
+      - label: Description
+        name: description
+        widget: text
+        required: false
+
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+
+      - label: Body
+        name: body
+        widget: richtext
+
+  # ----------------------------------------------------------
+  # NOTES
+  # Short-form posts, including future Mastodon imports.
+  # ----------------------------------------------------------
+  - name: notes
+    label: Notes
+    label_singular: Note
+    folder: /content/notes
+    create: true
+    extension: md
+    format: yaml-frontmatter
+    identifier_field: id
+    slug: "{{id}}"
+    preview_path: "/notes/{{slug}}/"
+    fields:
+      - label: ID
+        name: id
+        widget: uuid
+
+      - label: Publication Date
+        name: date
+        widget: datetime
+        default: "{{now}}"
+
+      - label: Source
+        name: source
+        widget: select
+        options:
+          - label: jewitch.blog
+            value: manual
+          - label: Mastodon
+            value: mastodon
+        default: manual
+
+      - label: Mastodon Post ID
+        name: mastodon_id
+        widget: string
+        required: false
+
+      - label: Original Mastodon URL
+        name: mastodon_url
+        widget: string
+        required: false
+
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+
+      - label: Body
+        name: body
+        widget: richtext
+
+  # ----------------------------------------------------------
+  # PAGES
+  # Permanent pages edited through the same CMS.
+  # ----------------------------------------------------------
+  - name: pages
+    label: Pages
+    files:
+
+      - name: about
+        label: About
+        file: /content/pages/about.md
+        fields:
+          - label: Title
+            name: title
+            widget: string
+
+          - label: Permalink
+            name: permalink
+            widget: hidden
+            default: /about/
+
+          - label: Body
+            name: body
+            widget: richtext
+
+      - name: now
+        label: Now
+        file: /content/pages/now.md
+        fields:
+          - label: Title
+            name: title
+            widget: string
+
+          - label: Permalink
+            name: permalink
+            widget: hidden
+            default: /now/
+
+          - label: Body
+            name: body
+            widget: richtext
+
+      - name: colophon
+        label: Colophon
+        file: /content/pages/colophon.md
+        fields:
+          - label: Title
+            name: title
+            widget: string
+
+          - label: Permalink
+            name: permalink
+            widget: hidden
+            default: /colophon/
+
+          - label: Body
+            name: body
+            widget: richtext
