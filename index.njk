@@ -6,7 +6,7 @@ permalink: /
 ---
 
 <section class="hero">
-  <p class="eyebrow">An independent home on the open web</p>
+  <p class="eyebrow">Independent · personal · open web</p>
 
   <h1>
     Words, notes,<br>
@@ -14,86 +14,66 @@ permalink: /
   </h1>
 
   <p class="hero__intro">
-    This is my little corner of the web, built by hand instead of
-    rented from an algorithm.
+    My little corner of the web, built by hand instead of rented from an algorithm.
+    Long-form thoughts live beside quick notes, experiments, and whatever else refuses to fit neatly in a box.
   </p>
+
+  <div class="hero__links" aria-label="Explore jewitch.blog">
+    <a href="/posts/">Read the writing <span aria-hidden="true">→</span></a>
+    <a href="/notes/">Browse the notes <span aria-hidden="true">→</span></a>
+  </div>
 </section>
 
-<section class="home-section">
-
+<section class="home-section home-section--writing">
   <div class="section-heading">
-    <h2>Latest writing</h2>
+    <div>
+      <p class="section-kicker">Longer thoughts</p>
+      <h2>Latest writing</h2>
+    </div>
     <a href="/posts/">All writing →</a>
   </div>
 
   {% if collections.posts.length %}
-
     <div class="post-list h-feed">
       {% for post in collections.posts %}
         {% if loop.index <= 3 %}
         <article class="post-summary h-entry">
-          <time class="dt-published" datetime="{{ post.date | isoDateTime }}">
-            {{ post.date | readableDate }}
-          </time>
-
-          <h3 class="p-name">
-            <a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a>
-          </h3>
-
-          {% if post.data.description %}
-            <p class="p-summary">{{ post.data.description }}</p>
-          {% endif %}
+          <time class="dt-published" datetime="{{ post.date | isoDateTime }}">{{ post.date | readableDate }}</time>
+          <h3 class="p-name"><a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a></h3>
+          {% if post.data.description %}<p class="p-summary">{{ post.data.description }}</p>{% endif %}
+          <a class="post-summary__read" href="{{ post.url }}" aria-label="Read {{ post.data.title }}">Read article →</a>
         </article>
         {% endif %}
       {% endfor %}
     </div>
-
   {% else %}
-
-    <p class="empty-state">
-      No long-form writing yet. The blank page is staring back.
-    </p>
-
+    <p class="empty-state">No long-form writing yet. The blank page is staring back.</p>
   {% endif %}
-
 </section>
 
-<section class="home-section">
-
+<section class="home-section home-section--notes">
   <div class="section-heading">
-    <h2>Recent notes</h2>
+    <div>
+      <p class="section-kicker">From the stream</p>
+      <h2>Recent notes</h2>
+    </div>
     <a href="/notes/">All notes →</a>
   </div>
 
   {% if collections.notes.length %}
-
     <div class="note-list h-feed">
       {% for note in collections.notes %}
         {% if loop.index <= 5 %}
         <article class="note-summary h-entry">
-
-          <div class="note-summary__content e-content">
-            {{ note.templateContent | safe }}
-          </div>
-
+          <div class="note-summary__content e-content">{{ note.templateContent | safe }}</div>
           <a class="note-summary__date u-url" href="{{ note.url }}">
-            <time
-              class="dt-published"
-              datetime="{{ note.date | isoDateTime }}"
-            >
-              {{ note.date | readableDateTime }}
-            </time>
+            <time class="dt-published" datetime="{{ note.date | isoDateTime }}">{{ note.date | readableDateTime }}</time>
           </a>
-
         </article>
         {% endif %}
       {% endfor %}
     </div>
-
   {% else %}
-
     <p class="empty-state">No notes yet.</p>
-
   {% endif %}
-
 </section>
