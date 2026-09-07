@@ -24,56 +24,59 @@ permalink: /
   </div>
 </section>
 
-<section class="home-section home-section--writing">
-  <div class="section-heading">
-    <div>
-      <p class="section-kicker">Longer thoughts</p>
-      <h2>Latest writing</h2>
+<div class="home-content-grid">
+  <section class="home-section home-section--writing">
+    <div class="section-heading">
+      <div>
+        <p class="section-kicker">Longer thoughts</p>
+        <h2>Latest writing</h2>
+      </div>
+      <a href="/posts/">All writing →</a>
     </div>
-    <a href="/posts/">All writing →</a>
-  </div>
 
-  {% if collections.posts.length %}
-    <div class="post-list h-feed">
-      {% for post in collections.posts %}
-        {% if loop.index <= 3 %}
-        <article class="post-summary h-entry">
-          <time class="dt-published" datetime="{{ post.date | isoDateTime }}">{{ post.date | readableDate }}</time>
-          <h3 class="p-name"><a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a></h3>
-          {% if post.data.description %}<p class="p-summary">{{ post.data.description }}</p>{% endif %}
-          <a class="post-summary__read" href="{{ post.url }}" aria-label="Read {{ post.data.title }}">Read article →</a>
-        </article>
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="empty-state">No long-form writing yet. The blank page is staring back.</p>
-  {% endif %}
-</section>
+    {% if collections.posts.length %}
+      <div class="post-list h-feed">
+        {% for post in collections.posts %}
+          {% if loop.index <= 3 %}
+          <article class="post-summary h-entry">
+            <time class="dt-published" datetime="{{ post.date | isoDateTime }}">{{ post.date | readableDate }}</time>
+            <div>
+              <h3 class="p-name"><a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a></h3>
+              {% if post.data.description %}<p class="p-summary">{{ post.data.description }}</p>{% endif %}
+            </div>
+            <a class="post-summary__read" href="{{ post.url }}" aria-label="Read {{ post.data.title }}">Read article →</a>
+          </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No long-form writing yet. The blank page is staring back.</p>
+    {% endif %}
+  </section>
 
-<section class="home-section home-section--notes">
-  <div class="section-heading">
-    <div>
-      <p class="section-kicker">From the stream</p>
-      <h2>Recent notes</h2>
+  <aside class="toot-sidebar" aria-labelledby="toot-sidebar-title">
+    <div class="toot-sidebar__header">
+      <p class="section-kicker">From the Fediverse</p>
+      <h2 id="toot-sidebar-title">Latest toots</h2>
     </div>
-    <a href="/notes/">All notes →</a>
-  </div>
 
-  {% if collections.notes.length %}
-    <div class="note-list h-feed">
-      {% for note in collections.notes %}
-        {% if loop.index <= 5 %}
-        <article class="note-summary h-entry">
-          <div class="note-summary__content e-content">{{ note.templateContent | safe }}</div>
-          <a class="note-summary__date u-url" href="{{ note.url }}">
-            <time class="dt-published" datetime="{{ note.date | isoDateTime }}">{{ note.date | readableDateTime }}</time>
-          </a>
-        </article>
-        {% endif %}
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="empty-state">No notes yet.</p>
-  {% endif %}
-</section>
+    {% if collections.notes.length %}
+      <div class="toot-list h-feed">
+        {% for note in collections.notes %}
+          {% if loop.index <= 5 %}
+          <article class="toot-summary h-entry">
+            <div class="toot-summary__content e-content">{{ note.templateContent | safe }}</div>
+            <a class="toot-summary__date u-url" href="{{ note.url }}">
+              <time class="dt-published" datetime="{{ note.date | isoDateTime }}">{{ note.date | readableDateTime }}</time>
+            </a>
+          </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No toots yet.</p>
+    {% endif %}
+
+    <a class="toot-sidebar__all" href="/notes/">All notes →</a>
+  </aside>
+</div>
