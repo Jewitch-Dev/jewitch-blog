@@ -6,21 +6,36 @@ permalink: /
 ---
 
 <section class="hero">
-  <p class="eyebrow">Independent · personal · open web</p>
+  <div class="hero__copy">
+    <p class="eyebrow">Independent · personal · open web</p>
+    <h1>Words, notes,<br>and assorted <em>witchery.</em></h1>
+    <p class="hero__intro">
+      My little corner of the web, built by hand instead of rented from an algorithm.
+      Long-form thoughts live beside quick notes, experiments, and whatever else refuses to fit neatly in a box.
+    </p>
+    <div class="hero__links" aria-label="Explore jewitch.blog">
+      <a href="/posts/">Read the writing <span aria-hidden="true">→</span></a>
+      <a href="/notes/">Browse the notes <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
 
-  <h1>
-    Words, notes,<br>
-    and assorted <em>witchery.</em>
-  </h1>
-
-  <p class="hero__intro">
-    My little corner of the web, built by hand instead of rented from an algorithm.
-    Long-form thoughts live beside quick notes, experiments, and whatever else refuses to fit neatly in a box.
-  </p>
-
-  <div class="hero__links" aria-label="Explore jewitch.blog">
-    <a href="/posts/">Read the writing <span aria-hidden="true">→</span></a>
-    <a href="/notes/">Browse the notes <span aria-hidden="true">→</span></a>
+  <div class="hero__sigil" aria-hidden="true">
+    <span class="hero__moon">☾</span>
+    <span class="hero__spark hero__spark--one">✦</span>
+    <span class="hero__spark hero__spark--two">·</span>
+    <span class="hero__spark hero__spark--three">✧</span>
+    <div class="hero__books">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="hero__cat">
+      <span class="hero__ear hero__ear--left"></span>
+      <span class="hero__ear hero__ear--right"></span>
+      <span class="hero__head"></span>
+      <span class="hero__body"></span>
+      <span class="hero__tail"></span>
+      <span class="hero__eye hero__eye--left"></span>
+      <span class="hero__eye hero__eye--right"></span>
+    </div>
   </div>
 </section>
 
@@ -50,8 +65,20 @@ permalink: /
         {% endfor %}
       </div>
     {% else %}
-      <p class="empty-state">No long-form writing yet. The blank page is staring back.</p>
+      <div class="empty-state empty-state--writing">
+        <span aria-hidden="true">✦</span>
+        <p><strong>The ink is still drying.</strong><br>No long-form writing yet, but the blank page has been warned.</p>
+      </div>
     {% endif %}
+
+    <aside class="home-manifesto">
+      <span aria-hidden="true">☾</span>
+      <div>
+        <p class="section-kicker">A small web manifesto</p>
+        <p>A quieter, kinder web is still possible.</p>
+        <small>Own your words. Keep your weird little corner. Link generously.</small>
+      </div>
+    </aside>
   </section>
 
   <aside class="toot-sidebar" aria-labelledby="toot-sidebar-title">
