@@ -7,103 +7,53 @@ permalink: /
 
 <section class="hero">
   <div class="hero__copy">
-    <p class="eyebrow">Independent · personal · open web</p>
     <h1>Words, notes,<br>and assorted <em>witchery.</em></h1>
-    <p class="hero__intro">
-      My little corner of the web, built by hand instead of rented from an algorithm.
-      Long-form thoughts live beside quick notes, experiments, and whatever else refuses to fit neatly in a box.
-    </p>
-    <div class="hero__links" aria-label="Explore jewitch.blog">
-      <a href="/posts/">Read the writing <span aria-hidden="true">→</span></a>
-      <a href="/notes/">Browse the notes <span aria-hidden="true">→</span></a>
-    </div>
+    <p class="hero__intro">My little corner of the web, built by hand instead of rented from an algorithm.</p>
+    <p class="eyebrow">Independent · personal · open web</p>
   </div>
 
-  <div class="hero__sigil" aria-hidden="true">
-    <span class="hero__moon">☾</span>
-    <span class="hero__spark hero__spark--one">✦</span>
-    <span class="hero__spark hero__spark--two">·</span>
-    <span class="hero__spark hero__spark--three">✧</span>
-    <div class="hero__books">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="hero__cat">
-      <span class="hero__ear hero__ear--left"></span>
-      <span class="hero__ear hero__ear--right"></span>
-      <span class="hero__head"></span>
-      <span class="hero__body"></span>
-      <span class="hero__tail"></span>
-      <span class="hero__eye hero__eye--left"></span>
-      <span class="hero__eye hero__eye--right"></span>
-    </div>
+  <div class="hero__art" aria-hidden="true">
+    <img src="/assets/hero-cat.jpg" alt="">
   </div>
+
+  <blockquote class="hero__aside">A quieter,<br><em>kinder</em> web is<br>still possible.<span>✦</span></blockquote>
 </section>
 
 <div class="home-content-grid">
   <section class="home-section home-section--writing">
     <div class="section-heading">
-      <div>
-        <p class="section-kicker">Longer thoughts</p>
-        <h2>Latest writing</h2>
-      </div>
+      <div><p class="section-kicker">Longer thoughts</p><h2>Latest writing</h2></div>
       <a href="/posts/">All writing →</a>
     </div>
 
     {% if collections.posts.length %}
       <div class="post-list h-feed">
-        {% for post in collections.posts %}
-          {% if loop.index <= 3 %}
+        {% for post in collections.posts %}{% if loop.index <= 3 %}
           <article class="post-summary h-entry">
             <time class="dt-published" datetime="{{ post.date | isoDateTime }}">{{ post.date | readableDate }}</time>
-            <div>
-              <h3 class="p-name"><a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a></h3>
-              {% if post.data.description %}<p class="p-summary">{{ post.data.description }}</p>{% endif %}
-            </div>
-            <a class="post-summary__read" href="{{ post.url }}" aria-label="Read {{ post.data.title }}">Read article →</a>
+            <div><h3 class="p-name"><a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a></h3>{% if post.data.description %}<p class="p-summary">{{ post.data.description }}</p>{% endif %}</div>
           </article>
-          {% endif %}
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
     {% else %}
-      <div class="empty-state empty-state--writing">
-        <span aria-hidden="true">✦</span>
-        <p><strong>The ink is still drying.</strong><br>No long-form writing yet, but the blank page has been warned.</p>
-      </div>
+      <div class="empty-state"><p>No long-form writing yet. The blank page is staring back.</p></div>
     {% endif %}
-
-    <aside class="home-manifesto">
-      <span aria-hidden="true">☾</span>
-      <div>
-        <p class="section-kicker">A small web manifesto</p>
-        <p>A quieter, kinder web is still possible.</p>
-        <small>Own your words. Keep your weird little corner. Link generously.</small>
-      </div>
-    </aside>
   </section>
 
   <aside class="toot-sidebar" aria-labelledby="toot-sidebar-title">
     <div class="toot-sidebar__header">
-      <p class="section-kicker">From the Fediverse</p>
-      <h2 id="toot-sidebar-title">Latest toots</h2>
+      <div><p class="section-kicker">From the Fediverse</p><h2 id="toot-sidebar-title">Latest toots</h2></div>
+      <a class="toot-sidebar__all" href="/notes/">All notes →</a>
     </div>
-
     {% if collections.notes.length %}
       <div class="toot-list h-feed">
-        {% for note in collections.notes %}
-          {% if loop.index <= 5 %}
+        {% for note in collections.notes %}{% if loop.index <= 5 %}
           <article class="toot-summary h-entry">
             <div class="toot-summary__content e-content">{{ note.templateContent | safe }}</div>
-            <a class="toot-summary__date u-url" href="{{ note.url }}">
-              <time class="dt-published" datetime="{{ note.date | isoDateTime }}">{{ note.date | readableDateTime }}</time>
-            </a>
+            <a class="toot-summary__date u-url" href="{{ note.url }}"><time class="dt-published" datetime="{{ note.date | isoDateTime }}">{{ note.date | readableDateTime }}</time></a>
           </article>
-          {% endif %}
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
-    {% else %}
-      <p class="empty-state">No toots yet.</p>
-    {% endif %}
-
-    <a class="toot-sidebar__all" href="/notes/">All notes →</a>
+    {% else %}<p class="empty-state">No toots yet.</p>{% endif %}
   </aside>
 </div>
