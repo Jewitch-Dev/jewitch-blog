@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="entry entry--note h-entry">
+  <header class="entry__header entry__header--note">
+    <p class="eyebrow">Note</p>
+
+    <p class="entry__meta">
+      <a class="u-url" href="{{ page.url }}">
+        <time class="dt-published" datetime="{{ date | isoDateTime }}">
+          {{ date | readableDateTime }}
+        </time>
+      </a>
+    </p>
+  </header>
+
+  <div class="entry__content e-content">
+    {{ content | safe }}
+  </div>
+
+  {% if mastodon_url %}
+    <footer class="entry__source">
+      Originally posted on <a rel="syndication" class="u-syndication" href="{{ mastodon_url }}">Mastodon</a>.
+    </footer>
+  {% endif %}
+</article>
