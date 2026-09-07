@@ -5,59 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{% if title and title != "Home" %}{{ title }} · {% endif %}{{ site.title }}</title>
-
-  <meta
-    name="description"
-    content="{{ description or site.description }}"
-  >
-
+  <meta name="description" content="{{ description or site.description }}">
   <meta name="color-scheme" content="light dark">
 
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} — Everything" href="{{ site.url }}/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} — Writing" href="{{ site.url }}/posts/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} — Notes" href="{{ site.url }}/notes/feed.xml">
+  <link rel="me" href="{{ site.mastodon }}">
   <link rel="stylesheet" href="/assets/css/base.css">
 </head>
 
 <body>
-
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header">
     <div class="site-header__inner">
-
       <a class="site-name" href="/" rel="home">
         jewitch<span class="site-name__dot">.</span>blog
       </a>
 
       <nav class="site-nav" aria-label="Primary navigation">
-        <a
-          href="/posts/"
-          {% if page.url.startsWith("/posts/") %}
-            aria-current="page"
-          {% endif %}
-        >Writing</a>
-
-        <a
-          href="/notes/"
-          {% if page.url.startsWith("/notes/") %}
-            aria-current="page"
-          {% endif %}
-        >Notes</a>
-
-        <a
-          href="/about/"
-          {% if page.url == "/about/" %}
-            aria-current="page"
-          {% endif %}
-        >About</a>
-
-        <a
-          href="/now/"
-          {% if page.url == "/now/" %}
-            aria-current="page"
-          {% endif %}
-        >Now</a>
+        <a href="/posts/" {% if page.url.startsWith("/posts/") %}aria-current="page"{% endif %}>Writing</a>
+        <a href="/notes/" {% if page.url.startsWith("/notes/") %}aria-current="page"{% endif %}>Notes</a>
+        <a href="/about/" {% if page.url == "/about/" %}aria-current="page"{% endif %}>About</a>
+        <a href="/now/" {% if page.url == "/now/" %}aria-current="page"{% endif %}>Now</a>
       </nav>
-
     </div>
   </header>
 
@@ -67,20 +40,24 @@
 
   <footer class="site-footer">
     <div class="site-footer__inner">
-
-      <p>
-        <strong>jewitch.blog</strong><br>
-        An independent home on the open web.
-      </p>
+      <div class="h-card">
+        <p>
+          <a class="p-name u-url" href="{{ site.url }}" rel="me"><strong>{{ site.name }}</strong></a><br>
+          <span class="p-note">{{ site.description }}</span>
+        </p>
+        <p>
+          <a rel="me" href="{{ site.mastodon }}">Mastodon</a>
+          <span aria-hidden="true">·</span>
+          <a href="/feed.xml">RSS</a>
+        </p>
+      </div>
 
       <p class="site-footer__links">
         <a href="/colophon/">Colophon</a>
         <span aria-hidden="true">·</span>
         <a href="/admin/">CMS</a>
       </p>
-
     </div>
   </footer>
-
 </body>
 </html>

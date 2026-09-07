@@ -18,6 +18,13 @@ export default function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  eleventyConfig.addCollection("feed", (collectionApi) => {
+    return [
+      ...collectionApi.getFilteredByGlob("content/posts/**/*.md"),
+      ...collectionApi.getFilteredByGlob("content/notes/**/*.md")
+    ].sort((a, b) => b.date - a.date);
+  });
+
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
@@ -40,23 +47,25 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter("htmlDateString", (dateObj) => {
     const date = new Date(dateObj);
-
     const parts = new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
       timeZone: "America/Chicago"
     }).formatToParts(date);
-
-    const get = (type) =>
-      parts.find((part) => part.type === type)?.value;
-
+    const get = (type) => parts.find((part) => part.type === type)?.value;
     return `${get("year")}-${get("month")}-${get("day")}`;
   });
 
-  eleventyConfig.addFilter("isoDateTime", (dateObj) => {
-    return new Date(dateObj).toISOString();
-  });
+  eleventyConfig.addFilter("isoDateTime", (dateObj) => new Date(dateObj).toISOString());
+  eleventyConfig.addFilter("rfc822Date", (dateObj) => new Date(dateObj).toUTCString());
+  eleventyConfig.addFilter("xmlEscape", (value = "") => String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;"));
+  eleventyConfig.addFilter("cdata", (value = "") => String(value).replaceAll("]]>", "]] ]]><![CDATA[>".replace(" ", "")));
 
   return {
     dir: {
@@ -65,7 +74,6 @@ export default function (eleventyConfig) {
       data: "src/_data",
       output: "_site"
     },
-
     markdownTemplateEngine: "njk",
     htmlTemplateEngine: "njk"
   };

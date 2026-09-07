@@ -1,0 +1,23 @@
+---
+permalink: /posts/feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title | xmlEscape }} — Writing</title>
+    <link>{{ site.url }}/posts/</link>
+    <description>Long-form writing from {{ site.title | xmlEscape }}</description>
+    <language>{{ site.language }}</language>
+    <atom:link xmlns:atom="http://www.w3.org/2005/Atom" href="{{ site.url }}/posts/feed.xml" rel="self" type="application/rss+xml" />
+{% for item in collections.posts %}
+    <item>
+      <title>{{ item.data.title | xmlEscape }}</title>
+      <link>{{ site.url }}{{ item.url }}</link>
+      <guid isPermaLink="true">{{ site.url }}{{ item.url }}</guid>
+      <pubDate>{{ item.date | rfc822Date }}</pubDate>
+      <description><![CDATA[{{ item.templateContent | cdata | safe }}]]></description>
+    </item>
+{% endfor %}
+  </channel>
+</rss>
