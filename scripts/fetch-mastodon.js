@@ -23,6 +23,9 @@ function cleanMastodonHtml(value = "") {
   return String(value)
     .replace(/<(script|style|iframe|object|embed|form)[^>]*>[\s\S]*?<\/\1>/gi, "")
     .replace(/\s(?:on\w+|style)=(?:"[^"]*"|'[^']*')/gi, "")
+    .replace(/<span\s+class=(?:"|')invisible(?:"|')>([\s\S]*?)<\/span>/gi, "")
+    .replace(/<span\s+class=(?:"|')ellipsis(?:"|')>([\s\S]*?)<\/span>/gi, "$1")
+    .replace(/<span\s+class=(?:"|')(?:"|')>([\s\S]*?)<\/span>/gi, "$1")
     .replaceAll("{", "&#123;")
     .replaceAll("}", "&#125;");
 }
