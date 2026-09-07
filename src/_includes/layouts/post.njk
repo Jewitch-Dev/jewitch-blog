@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="entry entry--post h-entry">
+  <header class="entry__header">
+    <p class="eyebrow">Writing</p>
+
+    <h1 class="entry__title p-name">{{ title }}</h1>
+
+    <p class="entry__meta">
+      <a class="u-url" href="{{ page.url }}">
+        <time class="dt-published" datetime="{{ date | isoDateTime }}">
+          {{ date | readableDate }}
+        </time>
+      </a>
+    </p>
+
+    {% if description %}
+      <p class="entry__description p-summary">{{ description }}</p>
+    {% endif %}
+  </header>
+
+  <div class="entry__content e-content">
+    {{ content | safe }}
+  </div>
+</article>
