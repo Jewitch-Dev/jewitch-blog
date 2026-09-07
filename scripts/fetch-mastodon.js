@@ -58,6 +58,10 @@ function yamlString(value) {
   return JSON.stringify(String(value ?? ""));
 }
 
+function renderDocument(status) {
+  return `---\ndate: ${yamlString(status.created_at)}\nsource: mastodon\nmastodon_id: ${yamlString(status.id)}\nmastodon_url: ${yamlString(status.url)}\n---\n${renderBody(status)}\n`;
+}
+
 async function mastodonJson(url) {
   const response = await fetch(url, {
     headers: { Accept: "application/json", "User-Agent": "jewitch.blog/1.0 (+https://jewitch.blog/)" },
@@ -96,22 +100,32 @@ async function run() {
     .slice(0, maximum);
 
   let created = 0;
-  let existing = 0;
+  let updated = 0;
+  let unchanged = 0;
 
   for (const status of publicStatuses) {
     const filename = path.join(outputDirectory, `${status.id}.md`);
-    try {
-      await fs.access(filename);
-      existing += 1;
-      continue;
-    } catch {}
+    const document = renderDocument(status);
+    let current = null;
 
-    const document = `---\ndate: ${yamlString(status.created_at)}\nsource: mastodon\nmastodon_id: ${yamlString(status.id)}\nmastodon_url: ${yamlString(status.url)}\n---\n${renderBody(status)}\n`;
-    await fs.writeFile(filename, document, { encoding: "utf8", flag: "wx" });
-    created += 1;
+    try {
+      current = await fs.readFile(filename, "utf8");
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+    }
+
+    if (current === null) {
+      await fs.writeFile(filename, document, { encoding: "utf8", flag: "wx" });
+      created += 1;
+    } else if (current !== document) {
+      await fs.writeFile(filename, document, "utf8");
+      updated += 1;
+    } else {
+      unchanged += 1;
+    }
   }
 
-  console.log(`Mastodon import: ${created} new, ${existing} already present, ${publicStatuses.length} eligible public posts checked.`);
+  console.log(`Mastodon import: ${created} new, ${updated} updated, ${unchanged} unchanged, ${publicStatuses.length} eligible public posts checked.`);
 }
 
 run().catch((error) => {
