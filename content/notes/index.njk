@@ -16,19 +16,19 @@ permalink: /notes/
 
 {% if collections.notes.length %}
 
-  <div class="note-list">
+  <div class="note-list h-feed">
 
     {% for note in collections.notes %}
       <article class="note-summary h-entry">
 
         <div class="note-summary__content e-content">
-          {{ note.content | safe }}
+          {{ note.templateContent | safe }}
         </div>
 
         <a class="note-summary__date u-url" href="{{ note.url }}">
           <time
             class="dt-published"
-            datetime="{{ note.date | htmlDateString }}"
+            datetime="{{ note.date | isoDateTime }}"
           >
             {{ note.date | readableDateTime }}
           </time>
