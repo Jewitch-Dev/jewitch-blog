@@ -28,20 +28,20 @@ permalink: /
 
   {% if collections.posts.length %}
 
-    <div class="post-list">
+    <div class="post-list h-feed">
       {% for post in collections.posts %}
         {% if loop.index <= 3 %}
-        <article class="post-summary">
-          <time datetime="{{ post.date | htmlDateString }}">
+        <article class="post-summary h-entry">
+          <time class="dt-published" datetime="{{ post.date | isoDateTime }}">
             {{ post.date | readableDate }}
           </time>
 
-          <h3>
-            <a href="{{ post.url }}">{{ post.data.title }}</a>
+          <h3 class="p-name">
+            <a class="u-url" href="{{ post.url }}">{{ post.data.title }}</a>
           </h3>
 
           {% if post.data.description %}
-            <p>{{ post.data.description }}</p>
+            <p class="p-summary">{{ post.data.description }}</p>
           {% endif %}
         </article>
         {% endif %}
@@ -67,19 +67,19 @@ permalink: /
 
   {% if collections.notes.length %}
 
-    <div class="note-list">
+    <div class="note-list h-feed">
       {% for note in collections.notes %}
         {% if loop.index <= 5 %}
         <article class="note-summary h-entry">
 
           <div class="note-summary__content e-content">
-            {{ note.content | safe }}
+            {{ note.templateContent | safe }}
           </div>
 
           <a class="note-summary__date u-url" href="{{ note.url }}">
             <time
               class="dt-published"
-              datetime="{{ note.date | htmlDateString }}"
+              datetime="{{ note.date | isoDateTime }}"
             >
               {{ note.date | readableDateTime }}
             </time>
