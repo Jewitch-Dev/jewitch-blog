@@ -54,6 +54,10 @@ export default function (eleventyConfig) {
     return `${get("year")}-${get("month")}-${get("day")}`;
   });
 
+  eleventyConfig.addFilter("isoDateTime", (dateObj) => {
+    return new Date(dateObj).toISOString();
+  });
+
   return {
     dir: {
       input: ".",
